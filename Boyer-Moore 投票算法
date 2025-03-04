@@ -1,0 +1,43 @@
+Boyer-Moore 投票算法
+
+这个算法的作用是快速找到数组中的多数元素
+算法核心思想‌：
+
+    ‌投票过程‌：通过“投票”和“抵消”的方式，遍历数组，维护一个候选元素和计数器。相同元素计数器加一，不同元素计数器减一，计数器为零时更换候选元素‌。
+    ‌验证过程‌：第一次遍历后得到的候选元素可能是多数元素，需第二次遍历验证其出现次数是否超过数组长度的一半‌。
+
+该算法适用于在序列中找出一个出现次数超过一半的元素。
+
+时间复杂度为O(n)，空间复杂度为O(1)
+
+例：
+LeetCode 169多数元素
+给定一个大小为 n 的数组 nums ，返回其中的多数元素。多数元素是指在数组中出现次数大于(n/2)的元素。
+你可以假设数组是非空的，并且给定的数组总是存在多数元素
+
+#include <vector>
+using namespace std;
+
+int majorityElement(vector<int>& nums) {
+    int candidate = nums[0];
+    int count = 1;
+
+    for (int i = 1; i < nums.size(); ++i) {
+        if (count == 0) {
+            candidate = nums[i];
+            count = 1;
+        } else if (nums[i] == candidate) {
+            ++count;
+        } else {
+            --count;
+        }
+    }
+
+    return candidate;
+}
+
+int main() {
+    vector<int> nums = {3, 2, 3};
+    cout << "The majority element is " << majorityElement(nums) << endl;
+    return 0;
+}
